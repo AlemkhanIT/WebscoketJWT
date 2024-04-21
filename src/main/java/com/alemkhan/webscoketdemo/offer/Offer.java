@@ -19,5 +19,5 @@ public class Offer {
     private Long id;
     private String title;
     private String content;
-    private String author; // Assuming author is the username of the authenticated user
+    private String author;
 }

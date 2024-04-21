@@ -37,4 +37,24 @@ public class OfferController {
         Offer createdOffer = offerService.createOffer(offer);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOffer);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOffer(@PathVariable Long id, Authentication authentication) {
+        if (!offerService.existsByIdAndAuthor(id, authentication.getName())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        offerService.deleteOffer(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Offer> updateOffer(@PathVariable Long id, @RequestBody Offer offer, Authentication authentication) {
+        if (!offerService.existsByIdAndAuthor(id, authentication.getName())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        offer.setId(id);
+        String author = authentication.getName();
+        offer.setAuthor(author);
+        Offer updatedOffer = offerService.updateOffer(id, offer);
+        return ResponseEntity.ok(updatedOffer);
+    }
 }

@@ -4,6 +4,7 @@ import com.alemkhan.webscoketdemo.model.Offer;
 import com.alemkhan.webscoketdemo.offer.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,17 @@ public class OfferService {
     public Offer createOffer(Offer offer) {
         return offerRepository.save(offer);
     }
+    public boolean existsByIdAndAuthor(Long id, String author) {
+        return offerRepository.existsByIdAndAuthor(id, author);
+    }
 
-    // Additional methods for updating and deleting offers can be added here
+    public void deleteOffer(Long id) {
+        offerRepository.deleteById(id);
+    }
+
+
+    public Offer updateOffer(Long id, Offer offer) {
+        offer.setId(id);
+        return offerRepository.save(offer);
+    }
 }
