@@ -26,7 +26,7 @@ public class Application {
                     User.builder()
                     .name("User 2")
                     .username("user2")
-                    .password(passwordEncoder.encode("pswd123"))
+                    .password(passwordEncoder.encode("pswd123456"))
                     .role(UserRole.ROLE_USER)
                     .build(),
 
@@ -35,7 +35,14 @@ public class Application {
                     .username("user1")
                     .password(passwordEncoder.encode("pswd123456"))
                     .role(UserRole.ROLE_USER)
-                    .build())
+                    .build(),
+
+                    User.builder()
+                            .name("Nieco")
+                            .username("user3")
+                            .password(passwordEncoder.encode("pswd123456"))
+                            .role(UserRole.ROLE_USER)
+                            .build())
 
             );
         };
