@@ -2,15 +2,13 @@ package com.alemkhan.webscoketdemo.ws;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.alemkhan.webscoketdemo.jwt.JwtTokenUtil;
 
 import java.util.List;
 
@@ -36,5 +34,10 @@ public class MessageController {
         simpMessagingTemplate.convertAndSendToUser(message.to(), "/topic", message);
     }
 
+    @GetMapping("/messages")
+    public ResponseEntity<List<MessageEntity>> getAllMessages(Authentication authentication) {
+        List<MessageEntity> messages = messageRepository.findByToUser(authentication.getName());
+        return ResponseEntity.ok(messages);
+    }
 
 }

@@ -107,6 +107,8 @@
     function setConnected(connected) {
         $("#connect").text("Connected").attr("disabled", true);
         $("#send").attr("disabled", false);
+
+        fetchMessages();
     }
 
     $("#login-form").submit((e) => {
@@ -161,6 +163,22 @@
         $("#username").val("");
         $("#message").val("");
     });
+
+    function fetchMessages() {
+        $.ajax({
+            url: "/messages",
+            type: "GET",
+            headers: {
+                "Authorization": "Bearer " + getItem("token")
+            },
+            success: function(data) {
+                $("#tbody").empty();
+                data.forEach(function(message) {
+                    $("#tbody").append(`<tr><td>${message.message}</td><td>${message.fromUser}</td></tr>`);
+                });
+            }
+        });
+    }
 </script>
 </body>
 </html>
